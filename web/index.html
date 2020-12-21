@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Brockly</title>
+	<link rel="stylesheet" type="text/css" href="/res/b.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/blockly_compressed.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/blocks_compressed.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/msg/en.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/javascript_compressed.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+	<p>
+    	<input type="text" id="pkgName" placeholder="Package name" value=""> <button onclick="exportCode()">Download</button> <button onclick="setDefault()">New</button> 
+  	</p>
+	<div id="blocklyDiv" ></div>
+
+	<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+	   	 <category name="Base" colour="100">
+		    <block type="math_number">
+		      <field name="NUM">123</field>
+		    </block>
+		    <block type="text"></block>
+		</category>
+	     <category name="Server code" colour="210">
+	    	<block type="require"></block>
+
+	    	<block type="server"></block>
+	    	<block type="on_start"></block>
+	    	<block type="on_shutdown"></block>
+	    	<block type="go"></block>
+		</category>
+
+		 <category name="Routing" colour="345">
+		 	<block type="route_group"></block>
+		 	<block type="route"></block>
+		 	<block type="go"></block>
+		 </category>
+
+	 </xml>
+
+	<script type="text/javascript" src="/res/index.js"></script>
+</body>
+</html>
