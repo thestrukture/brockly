@@ -228,13 +228,26 @@ var zoom = {
 Blockly.JavaScript['require'] = function(block) {
 
   var value_name = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-
+  var omit = [
+   '"context"',
+   '"log"',
+   '"os"',
+   '"os/signal"',
+   '"time"',
+   '"strings"'
+  ]
   //var text_hostname = block.getFieldValue('hostname');
   //var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
   // TODO: Assemble JavaScript into code variable.
   console.log(value_name);
-  var code = `import ${value_name.split("'").join('"')}
+  var code = "";
+  var importPkg = value_name.split("'").join('"');
+
+  if(omit.indexOf(importPkg) === -1){
+     code = `import ${importPkg}
   `;
+  }
+
   return code;
 };
 
