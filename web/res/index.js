@@ -303,7 +303,7 @@ Blockly.Blocks['route'] = {
         .appendField(new Blockly.FieldTextInput("/hello"), "path");
     this.appendDummyInput()
         .appendField("Method")
-        .appendField(new Blockly.FieldDropdown([["GET","GET"], ["PUT","PUT"], ["POST","POST"],  ["DELETE","DELETE"]]), "method");
+        .appendField(new Blockly.FieldDropdown([["GET","GET"], ["PUT","PUT"], ["POST","POST"],  ["DELETE","DELETE"],["OPTION","OPTION"]]), "method");
     this.appendStatementInput("sub")
         .setCheck("route")
         .appendField("Sub routes");
@@ -495,8 +495,8 @@ var stringToXml = (str) => {
 }
 
 var workspace = Blockly.inject('blocklyDiv',{
-	  toolbox: document.getElementById('toolbox'),
-	  theme : theme,
+    toolbox: document.getElementById('toolbox'),
+    theme : theme,
      trashcan : true,
      maxTrashcanContents : 0,
      zoom
