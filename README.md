@@ -5,5 +5,7 @@ A Visual Go REST API boilerplate builder. The boilerplate builder will export a 
 # PRs
 Any suggestion to build on this is welcome
 
+Important Note : Nest routes only within a Route group.
+Nest route groups only within a server. Only add one route group per server.
 
 Built with Google Blockly
