@@ -330,7 +330,9 @@ Blockly.JavaScript['route'] = function(block) {
 
   console.log(statements_name);
   var code = `
-  if strings.Contains(r.URL.Path, "${path}") && r.Method == "${method}" {
+
+
+  if strings.Contains( r.URL.Path, path + "${path}" ) && r.Method == "${method}" {
      path = path + "${path}"
      ${statements_name}
      ${handler}
@@ -475,6 +477,33 @@ func main() {
 
 }
 `;
+  return code;
+};
+
+Blockly.Blocks['handler'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("HTTP  Handler");
+    this.appendDummyInput()
+        .appendField("Path")
+        .appendField(new Blockly.FieldTextInput("/"), "path");
+    this.appendDummyInput()
+        .appendField("Handler")
+        .appendField(new Blockly.FieldTextInput("pkg.handler"), "func");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(45);
+ this.setTooltip("Adds a handler to your server");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.JavaScript['handler'] = function(block) {
+  var text_path = block.getFieldValue('path');
+  var text_func = block.getFieldValue('func');
+  // TODO: Assemble JavaScript into code variable.
+  var code = `http.HandleFunc("${text_path}", ${text_func})
+  `;
   return code;
 };
 
