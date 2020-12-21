@@ -1,3 +1,5 @@
+
+![][https://github.com/thestrukture/brockly/raw/main/blk.gif]
 # brockly
 A Visual Go REST API boilerplate builder. The boilerplate builder will export a Go web server with 0 dependencies, besides the ones you add.
 
