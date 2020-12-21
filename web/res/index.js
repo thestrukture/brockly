@@ -286,7 +286,7 @@ Blockly.JavaScript['route_group'] = function(block) {
 
   console.log(statements_name);
   var code = `
-  apiHandler := (w http.ResponseWriter, r *http.Request) {
+  apiHandler := func(w http.ResponseWriter, r *http.Request) {
      path := ""
      ${statements_name}
   }`;
@@ -401,7 +401,7 @@ Blockly.JavaScript['on_shutdown'] = function(block) {
   
    go func() {
       <-stop
-       log.Println("\nShutting down the server...")
+       log.Println("Shutting down the server...")
 
        ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
        h.Shutdown(ctx)
