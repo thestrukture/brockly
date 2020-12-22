@@ -568,5 +568,15 @@ var exportCode = () => {
    });
 }
 
+function showPreview(event) {
+  
+  var code = Blockly.JavaScript.workspaceToCode(workspace);
+  code = "package main\n" + code;
+  
+  document.getElementById("textPreview").value = code;
+}
+
+workspace.addChangeListener(showPreview);
+
 //var xml = Blockly.Xml.textToDom(testXml);
 //Blockly.Xml.domToWorkspace(xml, workspace);

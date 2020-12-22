@@ -1,10 +1,29 @@
 #blocklyDiv, body, html {
 	background: #333;
-	position: fixed;
-	width:  100%;
-	height: 95%;
+	height: 98%;
 }
 
 .blocklyMainBackground {
 	background: #ededed !important;
+}
+
+#preview {
+	width: 35%;
+    border: 1px solid #ededed;
+    background: #d6d6d6;
+    padding: 12px;
+}
+
+#preview textarea {
+	width: calc(100% - 24px);
+    height: 590px;
+    font-weight: bold;
+    padding: 12px;
+}
+
+
+.root-view {
+	display: flex;
+	flex-direction: row;
+	height: calc(100% - 21px);
 }

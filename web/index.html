@@ -14,8 +14,13 @@
 	<p>
     	<input type="text" id="pkgName" placeholder="Package name" value=""> <button onclick="exportCode()">Download</button> <button onclick="setDefault()">New</button> 
   	</p>
-	<div id="blocklyDiv" ></div>
-
+  	<div class="root-view">
+		<div id="blocklyDiv" class="flex-el" style="width:65%;" ></div>
+		<div class="flex-el" id="preview" contenteditable="true">
+			<p><b>Preview</b></p>
+			<textarea id="textPreview"></textarea>
+		</div>
+	</div>
 	<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
 	   	 <category name="Base" colour="100">
 		    <block type="math_number">
