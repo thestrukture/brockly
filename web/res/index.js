@@ -468,7 +468,7 @@ Blockly.JavaScript['server'] = function(block) {
     var p = omit[i];
     var pSanit = p.split('"').join("");
 
-    if(statements_name.includes(`${pSanit}.`)){
+    if(statements_name.includes(`${pSanit}.`) || pSanit == "log"){
       packages.push(`import ${p}`);
     }
   }
