@@ -298,11 +298,11 @@ Blockly.JavaScript['route_group'] = function(block) {
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
 
   console.log(statements_name);
-  var code = `
-  apiHandler := func(w http.ResponseWriter, r *http.Request) {
+  var code = `apiHandler := func(w http.ResponseWriter, r *http.Request) {
      path := ""
      ${statements_name}
-  }`;
+  }
+  `;
   return code;
 };
 
@@ -342,15 +342,13 @@ Blockly.JavaScript['route'] = function(block) {
   var statements_name = Blockly.JavaScript.statementToCode(block, 'sub');
 
   console.log(statements_name);
-  var code = `
-
-
-  if strings.Contains( r.URL.Path, path + "${path}" ) && r.Method == "${method}" {
+  var code = `if strings.Contains( r.URL.Path, path + "${path}" ) && r.Method == "${method}" {
      path = path + "${path}"
      ${statements_name}
      ${handler}
      return
-  }`;
+  }
+  `;
   return code;
 };
 
@@ -410,8 +408,7 @@ Blockly.JavaScript['on_shutdown'] = function(block) {
   //var text_hostname = block.getFieldValue('hostname');
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
 
-  var code = `
-  stop := make(chan os.Signal, 1)
+  var code = `stop := make(chan os.Signal, 1)
    signal.Notify(stop, os.Interrupt)
   
    go func() {
@@ -549,8 +546,9 @@ setTimeout(BlocklyStorage.restoreBlocks, 300);
 BlocklyStorage.backupOnUnload();
 
 var setDefault = () => {
-   var temp = '<xml xmlns="https://developers.google.com/blockly/xml"><block type="require" id="JqCkcv]bLOT(jC7{8@NO" x="29" y="14"><value name="VALUE"><block type="text" id="ghuK=W/u%?LQz%.Ut`_r"><field name="TEXT">net/http</field></block></value></block></xml>'
 
+   workspace.clear()
+   var temp = '<xml xmlns="https://developers.google.com/blockly/xml"><block type="require" id="JqCkcv]bLOT(jC7{8@NO" x="29" y="14"><value name="VALUE"><block type="text" id="ghuK=W/u%?LQz%.Ut`_r"><field name="TEXT">net/http</field></block></value></block></xml>'
    var xml = Blockly.Xml.textToDom(temp);
    Blockly.Xml.domToWorkspace(xml, workspace);
 
