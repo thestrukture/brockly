@@ -212,6 +212,15 @@ var zoom = {
     pinch: true
  };
 
+ var omit = [
+   '"context"',
+   '"log"',
+   '"os"',
+   '"os/signal"',
+   '"time"',
+   '"strings"'
+  ]
+
  Blockly.Blocks['require'] = {
   init: function() {
     this.setInputsInline(true);
@@ -228,14 +237,7 @@ var zoom = {
 Blockly.JavaScript['require'] = function(block) {
 
   var value_name = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-  var omit = [
-   '"context"',
-   '"log"',
-   '"os"',
-   '"os/signal"',
-   '"time"',
-   '"strings"'
-  ]
+  
   //var text_hostname = block.getFieldValue('hostname');
   //var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
   // TODO: Assemble JavaScript into code variable.
@@ -460,15 +462,21 @@ Blockly.JavaScript['server'] = function(block) {
   var text_hostname = block.getFieldValue('hostname');
   var statements_name = Blockly.JavaScript.statementToCode(block, 'children');
   // TODO: Assemble JavaScript into code variable.
-  console.log(statements_name);
+  var packages = [];
+
+  for (var i = omit.length - 1; i >= 0; i--) {
+    var p = omit[i];
+    var pSanit = p.split('"').join("");
+
+    if(statements_name.includes(`${pSanit}.`)){
+      packages.push(`import ${p}`);
+    }
+  }
+
+  var importStr = packages.join("\n");
 
   var code = `
-import "context"
-import "log"
-import "os"
-import "os/signal"
-import "time"
-import "strings"
+${importStr}
 
 func main() {
 
@@ -559,7 +567,7 @@ var exportCode = () => {
    var zip = new JSZip();
    var cmd = zip.folder("cmd");
    var code = Blockly.JavaScript.workspaceToCode(workspace);
-   cmd.file("main.go", "package main\n" + code );
+   cmd.file("main.go", "package main\n\n" + code );
    
    zip.generateAsync({type:"blob"})
    .then(function(content) {
@@ -571,7 +579,7 @@ var exportCode = () => {
 function showPreview(event) {
   
   var code = Blockly.JavaScript.workspaceToCode(workspace);
-  code = "package main\n" + code;
+  code = "package main\n\n" + code;
   
   document.getElementById("textPreview").value = code;
 }
