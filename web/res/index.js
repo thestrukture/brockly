@@ -553,6 +553,57 @@ ${statements_name}
   return code;
 };
 
+Blockly.Blocks['interface'] = {
+  init: function() {
+    this.appendStatementInput("ints")
+        .setCheck(null)
+        .appendField("Map");
+    this.setInputsInline(false);
+    this.setOutput(true, null);
+    this.setColour(230);
+   this.setTooltip("Go interface");
+   this.setHelpUrl("");
+ }
+}
+
+Blockly.JavaScript['interface'] = function(block) {
+
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'ints');
+  // TODO: Assemble JavaScript into code variable.
+  var code = `map[string]interface{}{${statements_name}}`;
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.Blocks['field'] = {
+  init: function() {
+
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField(new Blockly.FieldTextInput("key_name"), "key");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+   this.setTooltip("Go interface field");
+   this.setHelpUrl("");
+  }
+};
+
+Blockly.JavaScript['field'] = function(block) {
+  var text_key = block.getFieldValue('key');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+
+  if(value_name[0] == "'" && value_name[value_name.length - 1] == "'")
+    value_name = value_name.split("'").join("\"")
+
+  var code = `"${text_key}" : ${value_name},
+  `;
+  return code;
+};
+
+
+
 Blockly.Blocks['handler'] = {
   init: function() {
     this.appendDummyInput()
