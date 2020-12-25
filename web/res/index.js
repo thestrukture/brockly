@@ -275,6 +275,23 @@ Blockly.Blocks['server'] = {
   }
 };
 
+Blockly.Blocks['main'] = {
+  init: function() {
+
+
+    this.appendStatementInput("children")
+        .setCheck(null)
+        .appendField("Main");
+
+
+    this.setInputsInline(true);
+    this.setColour(105);
+    this.setTooltip("Defines a program's main function");
+
+    this.setHelpUrl("");
+  }
+};
+
 
 Blockly.Blocks['route_group'] = {
   init: function() {
@@ -318,7 +335,7 @@ Blockly.Blocks['route'] = {
         .appendField(new Blockly.FieldTextInput("/hello"), "path");
     this.appendDummyInput()
         .appendField("Method")
-        .appendField(new Blockly.FieldDropdown([["GET","GET"], ["PUT","PUT"], ["POST","POST"],  ["DELETE","DELETE"],["OPTION","OPTION"]]), "method");
+        .appendField(new Blockly.FieldDropdown([["GET","GET"], ["PUT","PUT"],["PATCH","PATCH"], ["POST","POST"],  ["DELETE","DELETE"],["OPTION","OPTION"]]), "method");
     this.appendStatementInput("sub")
         .setCheck("route")
         .appendField("Sub routes");
@@ -328,8 +345,8 @@ Blockly.Blocks['route'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(345);
- this.setTooltip("Individual route");
- this.setHelpUrl("");
+   this.setTooltip("Individual route");
+   this.setHelpUrl("");
   }
 };
 
@@ -466,7 +483,10 @@ Blockly.JavaScript['server'] = function(block) {
 
   for (var i = omit.length - 1; i >= 0; i--) {
     var p = omit[i];
-    var pSanit = p.split('"').join("");
+    var path_parts = p.split("/");
+    var p_name = path_parts[path_parts.length - 1];
+
+    var pSanit = p_name.split('"').join("");
 
     if(statements_name.includes(`${pSanit}.`) || pSanit == "log"){
       packages.push(`import ${p}`);
@@ -480,10 +500,10 @@ ${importStr}
 
 func main() {
 
-   h := &http.Server{Addr:  "${text_hostname}:${number_port}" }
+  h := &http.Server{Addr:  "${text_hostname}:${number_port}" }
 
    
-   ${statements_name}
+${statements_name}
 
    http.HandleFunc("/", apiHandler)
 
@@ -492,6 +512,41 @@ func main() {
    if err != nil {
       log.Println(err)
    }
+
+}
+`;
+  return code;
+};
+
+
+
+Blockly.JavaScript['main'] = function(block) {
+
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'children');
+  // TODO: Assemble JavaScript into code variable.
+  var packages = [];
+
+  for (var i = omit.length - 1; i >= 0; i--) {
+    var p = omit[i];
+    var path_parts = p.split("/");
+    var p_name = path_parts[path_parts.length - 1];
+
+    var pSanit = p_name.split('"').join("");
+
+
+    if(statements_name.includes(`${pSanit}.`)){
+      packages.push(`import ${p}`);
+    }
+  }
+
+  var importStr = packages.join("\n");
+
+  var code = `
+${importStr}
+
+func main() {
+  
+${statements_name}
 
 }
 `;
@@ -521,7 +576,7 @@ Blockly.JavaScript['handler'] = function(block) {
   var text_func = block.getFieldValue('func');
   // TODO: Assemble JavaScript into code variable.
   var code = `http.HandleFunc("${text_path}", ${text_func})
-  `;
+`;
   return code;
 };
 
@@ -541,17 +596,8 @@ var stringToXml = (str) => {
    return doc;
 }
 
-var workspace = Blockly.inject('blocklyDiv',{
-    toolbox: document.getElementById('toolbox'),
-    theme : theme,
-     trashcan : true,
-     maxTrashcanContents : 0,
-     zoom
-});
 
-setTimeout(BlocklyStorage.restoreBlocks, 300);
 
-BlocklyStorage.backupOnUnload();
 
 var setDefault = () => {
 
@@ -578,13 +624,13 @@ var exportCode = () => {
 
 function showPreview(event) {
   
+  if(!workspace)
+    return;
+  
   var code = Blockly.JavaScript.workspaceToCode(workspace);
   code = "package main\n\n" + code;
   
   document.getElementById("textPreview").value = code;
 }
 
-workspace.addChangeListener(showPreview);
 
-//var xml = Blockly.Xml.textToDom(testXml);
-//Blockly.Xml.domToWorkspace(xml, workspace);

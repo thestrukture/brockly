@@ -3,6 +3,7 @@
 <head>
 	<title>Brockly</title>
 	<link rel="stylesheet" type="text/css" href="res/b.css">
+	<link rel="stylesheet" href="css/tabs.css" />
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/blockly_compressed.js"></script>
   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/blocks_compressed.js"></script>
   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blockly/4.20201217.0/msg/en.min.js"></script>
@@ -14,13 +15,40 @@
 	<p>
     	<input type="text" id="pkgName" placeholder="Package name" value=""> <button onclick="exportCode()">Download</button> <button onclick="setDefault()">New</button> 
   	</p>
-  	<div class="root-view">
-		<div id="blocklyDiv" class="flex-el" style="width:65%;" ></div>
-		<div class="flex-el" id="preview" contenteditable="true">
-			<p><b>Preview</b></p>
-			<textarea id="textPreview"></textarea>
-		</div>
+
+  	<div class="root-view container">
+  		 <div class="tabs">
+		    <ul>
+		      <li><a href="#">Editor</a></li>
+		      <li><a href="#">Package Manager</a></li>
+		    </ul>
+		    <div class="tab-content">
+			    <div class="tab">
+					<div id="blocklyDiv" class="flex-el" style="width:65%;height:initial;" ></div>
+					<div class="flex-el" id="preview" >
+						<p><b>Preview</b></p>
+						<textarea id="textPreview"></textarea>
+					</div>
+				</div>
+				<div class="tab">
+					<div class="flex-el" style="width:25%;height:initial;border-right:1px #333 solid" >
+					 <p><b>Existing packages</b></p>
+					 <div id="packageList">
+
+					 </div>
+					</div>
+					<div class="flex-el" style="padding:150px 30px;" >
+						<p><b>Add a new package</b></p>
+						<input type="text" id="packageName" placeholder="Package import path">
+						<button onclick="addPackage()">Add</button> 
+						<br/>
+						<small>*Please note that any package saved must be on your computer, and within your $GOPATH. This may change in the future. Internal packages are not currently supported.</small>
+					</div>
+				</div>
+			</div>
+		 </div>
 	</div>
+
 	<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
 	   	 <category name="Base" colour="100">
 		    <block type="math_number">
@@ -28,6 +56,7 @@
 		    </block>
 		    <block type="text"></block>
 		    <block type="server"></block>
+		    <block type="main"></block>
 		</category>
 	     <category name="Server code" colour="210">
 	    	<block type="require"></block>
@@ -46,6 +75,8 @@
 
 	 </xml>
 
+	<script src="js/tabs.js"></script>
 	<script type="text/javascript" src="res/index.js"></script>
+	<script type="text/javascript" src="res/package_manager.js"></script>
 </body>
 </html>
