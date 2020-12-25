@@ -275,6 +275,49 @@ Blockly.Blocks['server'] = {
   }
 };
 
+Blockly.Blocks['http_handle'] = {
+  init: function() {
+    this.appendStatementInput("children")
+        .setCheck(null)
+        .appendField("Handle");
+
+    this.appendDummyInput()
+        .appendField("Path")
+        .appendField(new Blockly.FieldTextInput("/"), "path");
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+
+    this.setColour(105);
+    this.setTooltip("Represents net/http.Handle");
+
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['http_handlerFunc'] = {
+  init: function() {
+    this.appendStatementInput("children")
+        .setCheck(null)
+        .appendField("Handle with function");
+
+    this.appendDummyInput()
+        .appendField("Path")
+        .appendField(new Blockly.FieldTextInput("/"), "path");
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+
+
+    this.setColour(105);
+    this.setTooltip("Represents net/http.HandleFunc");
+
+    this.setHelpUrl("");
+  }
+};
+
+
+
 Blockly.Blocks['main'] = {
   init: function() {
 
@@ -322,6 +365,33 @@ Blockly.JavaScript['route_group'] = function(block) {
      ${statements_name}
   }
   `;
+  return code;
+};
+
+Blockly.JavaScript['http_handle'] = function(block) {
+
+  //var value_name = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var text_path = block.getFieldValue('path');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'children');
+
+
+  var code = `http.Handle("${text_path}", ${statements_name.replace("\n", "")})
+`;
+  return code;
+};
+
+
+Blockly.JavaScript['http_handlerFunc'] = function(block) {
+
+  //var value_name = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+
+  //var text_hostname = block.getFieldValue('hostname');
+  var text_path = block.getFieldValue('path');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'children');
+
+  var code = `http.HandleFunc("${text_path}", ${statements_name.replace("\n", "")})
+`;
   return code;
 };
 
@@ -570,7 +640,9 @@ Blockly.JavaScript['interface'] = function(block) {
 
   var statements_name = Blockly.JavaScript.statementToCode(block, 'ints');
   // TODO: Assemble JavaScript into code variable.
-  var code = `map[string]interface{}{${statements_name}}`;
+  var code = `map[string]interface{}{
+    ${statements_name}
+}`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -598,7 +670,7 @@ Blockly.JavaScript['field'] = function(block) {
     value_name = value_name.split("'").join("\"")
 
   var code = `"${text_key}" : ${value_name},
-  `;
+`;
   return code;
 };
 
