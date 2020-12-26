@@ -1,0 +1,79 @@
+*, ::after, ::before{
+
+	box-sizing: border-box;
+
+	-webkit-box-sizing: border-box;
+
+	-moz-box-sizing: border-box;
+
+}
+
+.tabs ul{
+
+	padding: 0;
+
+    margin: 0;
+
+    list-style-type: none;
+
+    border-bottom: 1px solid #eee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+}
+
+.tabs ul li a{
+
+	display: block;
+
+	outline: none;
+
+	padding: 5px;
+
+	text-decoration: none;
+
+	border: 1px solid #eee;
+
+	border-bottom: 0;
+
+	background-color: #eee;
+
+	color: #000;
+
+    transform: translateY(1px);
+
+	-webkit-transform: translateY(1px);
+
+	-moz-transform: translateY(1px);
+	font-size: 14px;
+
+}
+
+.tabs ul li a.active{
+
+	background-color: #FFF;
+	border-bottom:2px solid #333;
+
+}
+
+.tabs > div > div{
+
+	display: none;
+
+	border: 1px solid #eee;
+
+	border-top: 0;
+
+    padding: 2rem 1rem;
+
+}
+
+.tabs > div > div.active{
+
+	display: block;
+
+}
