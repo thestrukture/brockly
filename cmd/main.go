@@ -17,6 +17,8 @@ func main() {
  
   http.Handle("/", fs)
   http.HandleFunc("/map", getPackageHandler)
+  http.HandleFunc("/map_struct", getStructsHandler)
+  
 
   log.Println("Listening on :3000...")
 
@@ -36,6 +38,21 @@ func crashHandler(w http.ResponseWriter, r *http.Request, e error) {
 	w.Write([]byte(json))
 
 }
+
+func getStructsHandler(w http.ResponseWriter, r *http.Request) {
+  query := r.URL.Query()
+  name := query.Get("name")
+
+  g := os.ExpandEnv("$GOPATH")
+
+  pkgPath := filepath.Join(g, "src", name)
+  
+  data := genStructJSON(pkgPath)                  
+
+    w.WriteHeader(200)
+    w.Write([]byte(data))
+}
+
 
 func getPackageHandler(w http.ResponseWriter, r *http.Request) {
   query := r.URL.Query()
