@@ -264,8 +264,9 @@ function importPackage(path, index){
 
 	var path_parts = path.split("/");
 	var p_name = path_parts[path_parts.length - 1];
-	
-	omit.push(`"${path}"`);
+	var entry = `"${path}"`;
+
+	omit.push(entry);
 
 	function reqListener () {
 
@@ -287,7 +288,6 @@ function importStruct(path, index){
 	var path_parts = path.split("/");
 	var p_name = path_parts[path_parts.length - 1];
 	
-	omit.push(`"${path}"`);
 
 	function reqListener () {
 
