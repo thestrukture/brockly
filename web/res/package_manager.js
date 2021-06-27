@@ -239,7 +239,7 @@ var workspace = null;
 function initBlockly(){
 
 	if(init || !struct_mapped){
-		if(!struct_mapped)
+		if(!struct_mapped && !window.location.host.includes("github.io"))
 			importStructPackages()
 		return
 	}
